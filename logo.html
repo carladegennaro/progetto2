@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo NASA Interattivo</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .logo-container {
+            position: relative;
+            width: fit-content;
+            line-height: 0;
+        }
+
+        .logo-container img {
+            max-width: 500px;
+            height: auto;
+            /* Il logo sta sotto le stelle */
+            z-index: 1; 
+        }
+
+        /* La stella a croce */
+        .star-cross {
+            position: absolute;
+            pointer-events: none;
+            z-index: 99; /* SEMPRE SOPRA L'IMMAGINE */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Bracci della croce */
+        .star-cross::before, .star-cross::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 1px;
+        }
+
+        /* Orizzontale */
+        .star-cross::before {
+            width: 100%;
+            height: 1.5px;
+        }
+
+        /* Verticale */
+        .star-cross::after {
+            width: 1.5px;
+            height: 100%;
+        }
+
+        /* Animazione di comparsa e sparizione */
+        .animate-star {
+            animation: blink 1.5s ease-in-out forwards;
+        }
+
+        @keyframes blink {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo-container" id="logoContainer">
+    <img src="logonasa.jpg" alt="Logo NASA">
+</div>
+
+<script>
+    const container = document.getElementById('logoContainer');
+    let isHovering = false;
+    let starInterval;
+
+    // Funzione per creare una stella in un punto random sopra il logo
+    function createRandomStar() {
+        const star = document.createElement('div');
+        star.classList.add('star-cross', 'animate-star');
+
+        // Dimensioni casuali per la croce (tra 10px e 25px)
+        const size = Math.random() * 15 + 8;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+
+        // Posizione casuale ESATTAMENTE sopra l'area dell'immagine
+        const rect = container.getBoundingClientRect();
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+
+        star.style.top = top + "%";
+        star.style.left = left + "%";
+
+        container.appendChild(star);
+
+        // Rimuove l'elemento dopo l'animazione per non intasare il browser
+        setTimeout(() => {
+            star.remove();
+        }, 1500);
+    }
+
+    // Gestione dell'interazione
+    container.addEventListener('mouseenter', () => {
+        isHovering = true;
+        // Crea una pioggia di stelle finché il mouse è sopra
+        starInterval = setInterval(() => {
+            if(isHovering) createRandomStar();
+        }, 150); // Crea una stella ogni 150ms
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isHovering = false;
+        clearInterval(starInterval);
+    });
+
+    // Opzionale: Crea alcune stelle casuali all'avvio/aggiornamento
+    window.onload = () => {
+        for(let i=0; i<8; i++) {
+            setTimeout(createRandomStar, Math.random() * 2000);
+        }
+    };
+</script>
+
+</body>
+</html>

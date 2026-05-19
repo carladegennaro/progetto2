@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Archive 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 30px 60px 60px 60px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .corner-data {
+            position: absolute;
+            top: 30px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.1em;
+            z-index: 10;
+        }
+        
+        .corner-right { 
+            right: 60px; 
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 2px;
+            width: 200px;
+        }
+
+        .search-prefix {
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .search-input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            width: 100%;
+            text-align: left; 
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .logo-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: flex-start; 
+            margin-bottom: 10px; 
+        }
+
+        .logo-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-wrapper img {
+            max-width: 200px; 
+            height: auto;
+            z-index: 2;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .star {
+            position: absolute;
+            pointer-events: none;
+            z-index: 3;
+            width: 14px;   
+            height: 14px;  
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            animation: starFade 0.8s ease-out forwards;
+        }
+
+        .star::before {
+            content: '';
+            position: absolute;
+            background-color: #ffffff;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            transform: translateY(-50%);
+        }
+
+        .star::after {
+            content: '';
+            position: absolute;
+            background-color: #ffffff;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes starFade {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            20% { opacity: 1; }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .top-section, .list-header, .project-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .info-column, .filter-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Modificato: forzato l'allineamento verticale 'flex-end' su entrambe le colonne per bloccare l'allineamento di About e Filters */
+        .label-wrapper-header {
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            height: 24px; /* Altezza fissa per garantire che le baseline siano identiche */
+        }
+
+        .content-wrapper-header {
+            border-top: 1px solid #ffffff;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .top-section { margin-bottom: 60px; }
+
+        .label-small, .header-label {
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.4); 
+        }
+
+        .header-label.sortable {
+            cursor: pointer;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-label.sortable:hover {
+            color: #ffffff;
+        }
+
+        .main-title {
+            font-size: 2vw;
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .description-text {
+            font-size: 16px;
+            line-height: 1.4;
+            max-width: 400px;
+            opacity: 0.8;
+        }
+
+        .filter-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .filter-col-1 {
+            grid-column: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-col-3 {
+            grid-column: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chip {
+            font-size: 18px;
+            color: #fff;
+            opacity: 0.4;
+            cursor: pointer;
+            transition: opacity 0.2s ease, color 0.2s ease;
+            text-transform: capitalize;
+            white-space: nowrap;
+        }
+        
+        .chip:hover {
+            opacity: 1;
+            color: #ffffff !important;
+        }
+        
+        .chip.active { opacity: 1; }
+
+        .list-header {
+            padding-bottom: 15px;
+        }
+
+        .project-content-header {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .meta-header-wrapper, .project-meta-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 40px;
+            align-items: start;
+        }
+
+        .col-visit {
+            text-align: right;
+        }
+
+        .project-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr; 
+            gap: 30px;
+            align-items: start;
+        }
+
+        .title-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            padding-top: 5px;
+        }
+
+        .project-title {
+            font-size: 2vw; 
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .description-grid {
+            display: grid;
+            grid-template-rows: auto;
+            padding-top: 8px;
+        }
+
+        .project-description {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #ffffff;
+            padding-right: 20px;
+            opacity: 0.7;
+            display: -webkit-box;
+            line-clamp: 4; /* standard property for compatibility */
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-row.is-expanded .project-description {
+            display: block;
+            opacity: 0.7;
+            overflow: visible;
+        }
+
+        .project-link-btn {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 16px;
+            color: #ffffff;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .project-link-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        .project-row {
+            position: relative;
+            padding: 25px 0;
+            border-top: 1px solid #ffffff;
+            align-items: start;
+            z-index: 2;
+            cursor: pointer;
+            transition: border-width 0.1s ease;
+        }
+
+        .project-row:hover {
+            border-top-width: 3px;
+        }
+
+        #archive-list {
+            position: relative;
+        }
+
+        .project-meta {
+            font-size: 11px;
+            color: #fff;
+            padding-top: 8px;
+        }
+
+        .project-image-fixed {
+            width: 100%;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            background-color: #111;
+            margin-top: 5px;
+        }
+        
+        .sort-arrow {
+            font-size: 10px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .header-label.sortable:hover .sort-arrow {
+            opacity: 0.5;
+        }
+        
+        .header-label.active-sort {
+            color: #ffffff !important;
+        }
+        
+        .header-label.active-sort .sort-arrow {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <div class="logo-wrapper" id="logoWrapper">
+            <img src="logonasa.jpg" alt="Logo NASA" id="nasaLogo">
+        </div>
+    </div>
+
+    <header class="top-section">
+        <div class="info-column">
+            <!-- Modificato: aggiunto allineamento flex-end strutturato per pareggiare la baseline con i filtri -->
+            <div class="label-wrapper-header">
+                <span class="label-small">About</span>
+            </div>
+            <div class="content-wrapper-header">
+                <h1 class="main-title">Celebrating the space conquest</h1>
+                <p class="description-text">
+                    Nasa 70 is a digital archive and interactive platform that brings together various experimental sites to honor the 70th anniversary of NASA. Through a curated collection of digital experiences, the project explores and visualizes the history of space conquest, merging historical legacy with innovative web technologies.                   </p>
+            </div>
+        </div>
+        <div class="filter-column">
+            <div class="label-wrapper-header">
+                <span class="label-small">Filters</span>
+                <div class="search-wrapper">
+                    <span class="search-prefix">→</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search archive..." oninput="renderItems()">
+                </div>
+            </div>
+            <div class="content-wrapper-header">
+                <div class="filter-section" id="filter-container">
+                    <div class="filter-col-1" id="filter-col-1">
+                        <div class="chip active" onclick="filterBy('all', this)">all</div>
+                    </div>
+                    <div class="filter-col-3" id="filter-col-3"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="archive-list">
+        <div class="list-header">
+            <div class="project-content-header">
+                <div class="header-label sortable" id="sort-titolo" onclick="setSort('titolo')">
+                    <span>Project</span><span class="sort-arrow">↓</span>
+                </div>
+                <div class="header-label">
+                    <span></span>
+                </div>
+            </div>
+            <div class="meta-header-wrapper">
+                <div class="header-label sortable" id="sort-autore" onclick="setSort('autore')">
+                    <span>Author</span><span class="sort-arrow">↓</span>
+                </div>
+                <div class="header-label"></div>
+                <div class="header-label sortable" id="sort-data" onclick="setSort('data')">
+                    <span>Date</span><span class="sort-arrow">↓</span>
+                </div>
+                <div class="header-label col-visit"></div>
+            </div>
+        </div>
+        <div id="items-container"></div>
+    </main>
+
+    <script>
+        let projectData = [];
+        let currentFilter = 'all';
+        let currentSort = 'titolo';
+        let sortDirection = 'asc';
+        const IMAGE_BASE_URL = "immagini/";
+
+        const logoWrapper = document.getElementById('logoWrapper');
+        let starInterval;
+
+        logoWrapper.onmouseenter = () => {
+            starInterval = setInterval(() => {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 8 + 8; 
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                const rect = logoWrapper.getBoundingClientRect();
+                const radius = 90; 
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * radius;
+                
+                const x = rect.width / 2 + Math.cos(angle) * distance;
+                const y = rect.height / 2 + Math.sin(angle) * distance;
+                
+                star.style.left = `${x}px`;
+                star.style.top = `${y}px`;
+                
+                logoWrapper.appendChild(star);
+                
+                setTimeout(() => star.remove(), 800);
+            }, 60);
+        };
+
+        logoWrapper.onmouseleave = () => {
+            clearInterval(starInterval);
+        };
+
+        async function loadData() {
+            try {
+                const response = await fetch('https://ixd-supsi.github.io/n70api/data.json');
+                projectData = await response.json();
+                initFilters();
+                updateSortHeaders();
+                renderItems();
+            } catch (error) { console.error(error); }
+        }
+
+        function initFilters() {
+            const firstTags = new Set();
+            projectData.forEach(item => { if (item.tags && item.tags.length > 0) firstTags.add(item.tags[0]); });
+            
+            const col1 = document.getElementById('filter-col-1');
+            const col3 = document.getElementById('filter-col-3');
+            
+            let index = 1;
+            
+            firstTags.forEach(tag => {
+                const el = document.createElement('div');
+                el.className = 'chip'; el.innerText = tag;
+                el.onclick = () => filterBy(tag, el);
+                
+                if (index % 2 === 0) {
+                    col1.appendChild(el);
+                } else {
+                    col3.appendChild(el);
+                }
+                index++;
+            });
+        }
+
+        function setSort(type) {
+            if (currentSort === type) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort = type;
+                sortDirection = 'asc';
+            }
+            updateSortHeaders();
+            renderItems();
+        }
+
+        function updateSortHeaders() {
+            const keys = ['titolo', 'autore', 'data'];
+            keys.forEach(key => {
+                const header = document.getElementById(`sort-${key}`);
+                if (!header) return;
+                
+                const arrow = header.querySelector('.sort-arrow');
+                
+                if (key === currentSort) {
+                    header.classList.add('active-sort');
+                    arrow.innerText = sortDirection === 'asc' ? '↑' : '↓';
+                } else {
+                    header.classList.remove('active-sort');
+                    arrow.innerText = '↓';
+                }
+            });
+        }
+
+        function filterBy(tag, el) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            currentFilter = tag;
+            renderItems();
+        }
+
+        function renderItems() {
+            const container = document.getElementById('items-container');
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            container.innerHTML = '';
+
+            let filtered = projectData.filter(i => {
+                const matchesFilter = currentFilter === 'all' || (i.tags && i.tags[0] === currentFilter);
+                const matchesSearch = i.titolo.toLowerCase().includes(query) || (i.autore && i.autore.toLowerCase().includes(query));
+                return matchesFilter && matchesSearch;
+            });
+            
+            filtered.sort((a,b) => {
+                let comparison = 0;
+                if (currentSort === 'data') {
+                    const dateA = new Date(a.data?.anno || 0, (a.data?.mese || 1) - 1, a.data?.giorno || 1);
+                    const dateB = new Date(b.data?.anno || 0, (b.data?.mese || 1) - 1, b.data?.giorno || 1);
+                    comparison = dateA - dateB;
+                } else {
+                    comparison = (a[currentSort] || "").localeCompare(b[currentSort] || "");
+                }
+                return sortDirection === 'asc' ? comparison : -comparison;
+            });
+
+            filtered.forEach(item => {
+                const hasImage = item.immagine && item.immagine.length > 0;
+                const imgPath = hasImage ? IMAGE_BASE_URL + item.immagine[0] : "";
+                const day = item.data?.giorno || "--";
+                const month = item.data?.mese || "--";
+                const year = item.data?.anno || "----";
+                const projectUrl = item.url || "#";
+                
+                const imageHtml = hasImage 
+                    ? `<div class="project-image-fixed" style="background-image: url('${imgPath}')"></div>` 
+                    : `<div></div>`;
+                
+                const row = document.createElement('div');
+                row.className = 'project-row';
+                row.innerHTML = `
+                    <div class="project-content">
+                        <div class="title-wrapper">
+                            <div class="project-title">${item.titolo}</div>
+                        </div>
+                        <div class="description-grid">
+                            <div class="project-description">${item.descrizione || "No description available."}</div>
+                        </div>
+                    </div>
+                    <div class="project-meta-wrapper">
+                        <div class="project-meta">${item.autore || "NASA"}</div>
+                        <div>${imageHtml}</div>
+                        <div class="project-meta opacity-40">${day}/${month}/${year}</div>
+                        <div class="project-meta col-visit">
+                            <a href="${projectUrl}" target="_blank" class="project-link-btn" onclick="event.stopPropagation();">Explore</a>
+                        </div>
+                    </div>
+                `;
+
+                row.onclick = (e) => {
+                    row.classList.toggle('is-expanded');
+                };
+
+                container.appendChild(row);
+            });
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>
