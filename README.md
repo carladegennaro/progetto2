@@ -4,7 +4,7 @@ Docenti: A. Gysin, G. Profeta
 
 Progetto 1: La conquista dello spazio
 
-# Titolo progetto
+# Nasa 70
 Autore: Carla De Gennaro \
 [Nasa 70](https://carladegennaro.github.io/progetto2/index)
 
