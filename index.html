@@ -361,7 +361,7 @@
 </head>
 <body>
 
-    <div class="logo-container">
+    <div class="logo-container" id="logoContainer">
         <div class="logo-wrapper" id="logoWrapper">
             <img src="logonasa.jpg" alt="Logo NASA" id="nasaLogo">
         </div>
@@ -429,10 +429,10 @@
         let sortDirection = 'asc';
         const IMAGE_BASE_URL = "immagini/";
 
-        const logoWrapper = document.getElementById('logoWrapper');
+        const logoContainer = document.getElementById('logoContainer');
         let starInterval;
 
-        logoWrapper.onmouseenter = () => {
+        logoContainer.onmouseenter = () => {
             starInterval = setInterval(() => {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -442,24 +442,22 @@
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 
-                const rect = logoWrapper.getBoundingClientRect();
-                const radius = 90; 
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * radius;
+                const rect = logoContainer.getBoundingClientRect();
                 
-                const x = rect.width / 2 + Math.cos(angle) * distance;
-                const y = rect.height / 2 + Math.sin(angle) * distance;
+                // Genera le coordinate casuali all'interno dell'intera area superiore (logoContainer)
+                const x = Math.random() * rect.width;
+                const y = Math.random() * rect.height;
                 
                 star.style.left = `${x}px`;
                 star.style.top = `${y}px`;
                 
-                logoWrapper.appendChild(star);
+                logoContainer.appendChild(star);
                 
                 setTimeout(() => star.remove(), 800);
-            }, 60);
+            }, 15);
         };
 
-        logoWrapper.onmouseleave = () => {
+        logoContainer.onmouseleave = () => {
             clearInterval(starInterval);
         };
 
