@@ -15,6 +15,37 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- BACK TO TOP ARROW STYLE --- */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 60px; 
+            width: 40px;
+            height: 40px;
+            background-color: #000; 
+            color: #fff;            
+            border: 1px solid #fff; 
+            border-radius: 50%; 
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0; 
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.2s ease, opacity 0.2s ease;
+        }
+
+        #back-to-top:hover {
+            opacity: 0.8 !important; 
+        }
+
+        #back-to-top.show {
+            opacity: 1; 
+            visibility: visible;
+        }
+
         .corner-data {
             position: absolute;
             top: 30px;
@@ -59,12 +90,13 @@
             color: rgba(255, 255, 255, 1);
         }
 
+        /* MODIFICATO: Distanza bilanciata per il logo */
         .logo-container {
             position: relative;
             width: 100%;
             display: flex;
             justify-content: flex-start; 
-            margin-bottom: 5px; 
+            margin-bottom: 30px; 
         }
 
         .logo-wrapper {
@@ -130,7 +162,6 @@
             flex-direction: column;
         }
 
-        /* Modificato: forzato l'allineamento verticale 'flex-end' su entrambe le colonne per bloccare l'allineamento di About e Filters */
         .label-wrapper-header {
             padding-bottom: 6px;
             display: flex;
@@ -188,14 +219,14 @@
         }
 
         .filter-col-1 {
-            grid-column: 1; /* Modificato: allineato alla prima colonna (inizio del titolo delle righe) */
+            grid-column: 1; 
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
         .filter-col-3 {
-            grid-column: 2; /* Modificato: allineato alla seconda colonna */
+            grid-column: 2; 
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -218,8 +249,14 @@
         
         .chip.active { opacity: 1; }
 
+        /* LIST HEADER STICKY */
         .list-header {
-            padding-bottom: 8px;
+            position: sticky;
+            top: 0;
+            background-color: #000; 
+            padding-top: 10px;      
+            padding-bottom: 12px;
+            z-index: 10;            
         }
 
         .project-content-header {
@@ -408,6 +445,10 @@
         <div id="items-container"></div>
     </main>
 
+    <div id="back-to-top" title="Torna all'inizio">
+        &uarr;
+    </div>
+
     <script>
         let projectData = [];
         let currentFilter = 'all';
@@ -445,6 +486,24 @@
         logoContainer.onmouseleave = () => {
             clearInterval(starInterval);
         };
+
+        // LOGICA BACK TO TOP 
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) { 
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' 
+            });
+        });
 
         async function loadData() {
             try {
