@@ -22,11 +22,11 @@
             right: 60px; 
             width: 40px;
             height: 40px;
-            background-color: #000; 
-            color: #fff;            
-            border: 1px solid #fff; 
-            border-radius: 50%; 
-            font-size: 20px;
+            background-color: transparent; 
+            color: #fff;                  
+            border: none;                 
+            font-size: 28px;              
+            font-weight: 100;             
             display: flex;
             align-items: center;
             justify-content: center;
@@ -34,11 +34,13 @@
             z-index: 100;
             opacity: 0; 
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.2s ease, opacity 0.2s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: bottom center; 
         }
 
         #back-to-top:hover {
-            opacity: 0.8 !important; 
+            transform: scaleY(1.3) translateY(-4px);
+            opacity: 1 !important;
         }
 
         #back-to-top.show {
@@ -69,9 +71,9 @@
             width: auto;
         }
 
-        .search-prefix {
-            font-size: 12px;
-            letter-spacing: 0.05em;
+        .search-icon {
+            width: 12px;
+            height: 12px;
             color: rgba(255, 255, 255, 1);
         }
 
@@ -90,7 +92,6 @@
             color: rgba(255, 255, 255, 1);
         }
 
-        /* MODIFICATO: Distanza bilanciata per il logo */
         .logo-container {
             position: relative;
             width: 100%;
@@ -178,7 +179,7 @@
             gap: 10px;
         }
 
-        .top-section { margin-bottom: 60px; }
+        .top-section { margin-bottom: 120px; }
 
         .label-small, .header-label {
             font-size: 12px;
@@ -214,26 +215,12 @@
         .filter-section {
             display: grid;
             grid-template-columns: repeat(4, 1fr); 
-            gap: 40px;
+            gap: 10px 40px;
             align-items: flex-start;
         }
 
-        .filter-col-1 {
-            grid-column: 1; 
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .filter-col-3 {
-            grid-column: 2; 
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
         .chip {
-            font-size: 19px;
+            font-size: 12px;
             color: #fff;
             opacity: 0.4;
             cursor: pointer;
@@ -249,7 +236,6 @@
         
         .chip.active { opacity: 1; }
 
-        /* LIST HEADER STICKY */
         .list-header {
             position: sticky;
             top: 0;
@@ -257,6 +243,12 @@
             padding-top: 10px;      
             padding-bottom: 12px;
             z-index: 10;            
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        .list-header.scrolled {
+            border-bottom-color: #ffffff;
         }
 
         .project-content-header {
@@ -266,31 +258,11 @@
             align-items: start;
         }
 
-        .meta-header-wrapper, .project-meta-wrapper {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 40px;
-            align-items: start;
-        }
-
-        .col-visit {
-            text-align: right;
-        }
-
-        .col-visit a {
-            color: rgba(255, 255, 255, 1);
-            transition: color 0.2s ease;
-        }
-
-        .col-visit a:hover {
-            color: #ffffff !important;
-        }
-
         .project-content {
             display: grid;
             grid-template-columns: repeat(4, 1fr); 
             gap: 40px;
-            align-items: start;
+            align-items: baseline;
         }
 
         .title-wrapper {
@@ -307,13 +279,23 @@
             font-weight: 500;
             letter-spacing: -0.02em;
             line-height: 1.1;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis; 
+        }
+
+        .project-meta-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 40px;
+            align-items: start;
+            margin-top: 12px;
         }
 
         .description-grid {
-            grid-column: span 2;
+            grid-column: span 2; 
             display: grid;
             grid-template-rows: auto;
-            padding-top: 4px;
         }
 
         .project-description {
@@ -348,26 +330,21 @@
         .project-meta {
             font-size: 12px;
             color: #fff;
-            padding-top: 4px;
+            padding-top: 0px;
         }
 
-        .col-visit a.project-meta {
-            opacity: 0.6;
-            transition: opacity 0.2s ease;
-        }
-
-        .col-visit a.project-meta:hover {
-            opacity: 1 !important;
+        .image-container-col {
+            grid-column: span 2; 
         }
 
         .project-image-fixed {
             width: 100%;
-            height: 80px;
-            background-size: cover;
-            background-position: center;
+            aspect-ratio: 16 / 9; 
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center right; 
             opacity: 1;
-            background-color: #111;
-            margin-top: 4px; 
+            background-color: transparent;
         }
         
         .sort-arrow {
@@ -410,25 +387,24 @@
         </div>
         <div class="filter-column">
             <div class="label-wrapper-header">
-                <span class="label-small">Filters</span>
+                <span class="label-small">Categories</span>
                 <div class="search-wrapper">
-                    <span class="search-prefix">→</span>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search archive..." oninput="renderItems()">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by tag, name, ..." oninput="renderItems()">
                 </div>
             </div>
             <div class="content-wrapper-header">
                 <div class="filter-section" id="filter-container">
-                    <div class="filter-col-1" id="filter-col-1">
-                        <div class="chip active" onclick="filterBy('all', this)">all</div>
-                    </div>
-                    <div class="filter-col-3" id="filter-col-3"></div>
+                    <div class="chip active" onclick="filterBy('all', this)">all</div>
                 </div>
             </div>
         </div>
     </header>
 
     <main id="archive-list">
-        <div class="list-header">
+        <div class="list-header" id="sticky-header">
             <div class="project-content-header">
                 <div class="header-label sortable" id="sort-titolo" onclick="setSort('titolo')" style="grid-column: span 2;">
                     <span>Project</span><span class="sort-arrow">↓</span>
@@ -440,7 +416,6 @@
                     <span>Date</span><span class="sort-arrow">↓</span>
                 </div>
             </div>
-            
         </div>
         <div id="items-container"></div>
     </main>
@@ -487,14 +462,22 @@
             clearInterval(starInterval);
         };
 
-        // LOGICA BACK TO TOP 
         const backToTopButton = document.getElementById('back-to-top');
+        const stickyHeader = document.getElementById('sticky-header');
 
         window.addEventListener('scroll', () => {
+            const headerTop = stickyHeader.getBoundingClientRect().top;
+
             if (window.scrollY > 200) { 
                 backToTopButton.classList.add('show');
             } else {
                 backToTopButton.classList.remove('show');
+            }
+
+            if (headerTop <= 0 && window.scrollY > 300) {
+                stickyHeader.classList.add('scrolled');
+            } else {
+                stickyHeader.classList.remove('scrolled');
             }
         });
 
@@ -519,22 +502,14 @@
             const firstTags = new Set();
             projectData.forEach(item => { if (item.tags && item.tags.length > 0) firstTags.add(item.tags[0]); });
             
-            const col1 = document.getElementById('filter-col-1');
-            const col3 = document.getElementById('filter-col-3');
-            
-            let index = 1;
+            const container = document.getElementById('filter-container');
             
             firstTags.forEach(tag => {
                 const el = document.createElement('div');
-                el.className = 'chip'; el.innerText = tag;
+                el.className = 'chip'; 
+                el.innerText = tag;
                 el.onclick = () => filterBy(tag, el);
-                
-                if (index % 2 === 0) {
-                    col1.appendChild(el);
-                } else {
-                    col3.appendChild(el);
-                }
-                index++;
+                container.appendChild(el);
             });
         }
 
@@ -581,7 +556,12 @@
 
             let filtered = projectData.filter(i => {
                 const matchesFilter = currentFilter === 'all' || (i.tags && i.tags[0] === currentFilter);
-                const matchesSearch = i.titolo.toLowerCase().includes(query) || (i.autore && i.autore.toLowerCase().includes(query));
+                
+                const matchesTagArray = i.tags && i.tags.some(t => t.toLowerCase().includes(query));
+                const matchesSearch = i.titolo.toLowerCase().includes(query) || 
+                                      (i.autore && i.autore.toLowerCase().includes(query)) || 
+                                      matchesTagArray;
+                                      
                 return matchesFilter && matchesSearch;
             });
             
@@ -607,10 +587,11 @@
                 
                 const imageHtml = hasImage 
                     ? `<div class="project-image-fixed" style="background-image: url('${imgPath}')"></div>` 
-                    : `<div></div>`;
+                    : `<div class="project-image-fixed"></div>`;
                 
                 const row = document.createElement('div');
                 row.className = 'project-row';
+                row.onclick = () => { if(projectUrl !== "#") window.open(projectUrl, '_blank'); };
                 row.innerHTML = `
                     <div class="project-content">
                         <div class="title-wrapper">
@@ -623,10 +604,7 @@
                         <div class="description-grid">
                             <div class="project-description">${item.descrizione || "No description available."}</div>
                         </div>
-                        <div>${imageHtml}</div>
-                        <div class="project-meta col-visit">
-                            <a href="${projectUrl}" target="_blank" class="project-meta" onclick="event.stopPropagation();">Explore</a>
-                        </div>
+                        <div class="image-container-col">${imageHtml}</div>
                     </div>
                 `;
 
