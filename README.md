@@ -14,7 +14,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 
 ## Riferimenti progettuali
-Dolor sit amet consectetur adipiscing elit duis tristique. Sociis natoque penatibus et magnis dis parturient montes nascetur. Est sit amet facilisis magna. Tellus rutrum tellus pellentesque eu. Dictum sit amet justo donec enim. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Sed faucibus turpis in eu mi bibendum neque egestas congue. Tellus in metus vulputate eu scelerisque felis imperdiet proin. Dolor magna eget est lorem ipsum dolor. Sit amet mattis vulputate enim nulla. Elit pellentesque habitant morbi tristique senectus et. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa.
+Il layout e la logica visiva del progetto nascono dall'estetica dei database e dei fogli di calcolo. Lo spunto principale per la visualizzazione dei progetti deriva dall'archivio di Viso Haus, da cui è stata ripresa l'idea di una lista di elementi semplice e rigorosa che ricorda la struttura geometrica di una tabella Excel. A questa impostazione per la visualizzazione dei dati si unisce l'ispirazione tratta dal sito di Studio Herrström per la definizione della struttura superiore della pagina. Da questo secondo riferimento è stata infatti ripresa l'architettura del layout che separa la parte introduttiva del sito dalla sezione dedicata ai filtri di navigazione.
 
 
 ## Design dell’interfaccia e modalità di interazione
@@ -66,6 +66,4 @@ image.src = url;
 ```
 
 ## Target e contesto d’uso
-Sed enim ut sem viverra aliquet eget sit. Iaculis at erat pellentesque adipiscing commodo. Et pharetra pharetra massa massa ultricies mi quis hendrerit dolor. At tempor commodo ullamcorper a lacus vestibulum sed arcu. Ipsum faucibus vitae aliquet nec ullamcorper sit. Tempus quam pellentesque nec nam aliquam sem et tortor. Turpis egestas sed tempus urna et pharetra pharetra massa. Ridiculus mus mauris vitae ultricies leo integer malesuada nunc vel.
-
-[<img src="doc/munari.jpg" width="300" alt="Supplemento al dizionario italiano">]()
+Per questo target, l'esperienza ideale si sviluppa attraverso una consultazione da postazione desktop, in cui muoversi liberamente e con i propri tempi. L’interfaccia trasforma la navigazione in un percorso molto intuitivo: l'utente ha la possibilità di sfogliare l'archivio in modo spontaneo, lasciandosi guidare dalle anteprime visive per scoprire nuovi progetti quasi per caso, senza dover necessariamente cercare qualcosa di specifico
