@@ -1,4 +1,4 @@
-# Intenzioni del progetto 2: Nasa 70
+# Intenzioni di progetto: Nasa 70
 
 ### Idea si base
 Il progetto nasce con l'obiettivo di creare una piattaforma digitale interattiva dedicata alla scoperta e all'esplorazione dei diversi progetti sperimentali sviluppati appositamente per celebrare il 70° anniversario della conquista dello spazio della NASA.
