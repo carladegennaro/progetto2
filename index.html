@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NASA Archive 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* --- NATIVE RESET TO RETAIN TAILWIND LAYOUT --- */
+        * {
+            box-sizing: border-box;
+        }
+        h1, p {
+            margin: 0;
+        }
+        input {
+            font-family: inherit;
+        }
+
         body {
             background-color: #000;
-            color: #fff;
+            color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px 60px 40px 60px;
@@ -23,7 +33,7 @@
             width: 40px;
             height: 40px;
             background-color: transparent; 
-            color: #fff;                  
+            color: #ffffff;                  
             border: none;                 
             font-size: 28px;              
             font-weight: 100;             
@@ -39,7 +49,7 @@
         }
 
         #back-to-top:hover {
-            transform: scaleY(1.3) translateY(-4px);
+            transform: scale(1.5) translateY(-4px);
             opacity: 1 !important;
         }
 
@@ -200,16 +210,16 @@
         }
 
         .main-title {
-            font-size: calc(2vw + 1pt);
+            font-size: 30px;
             font-weight: 500;
             line-height: 1.1;
             letter-spacing: -0.02em;
+            margin-bottom: 10px;
         }
         .description-text {
             font-size: 17px;
             line-height: 1.4;
             max-width: 400px;
-            opacity: 0.8;
         }
 
         .filter-section {
@@ -275,7 +285,7 @@
         }
 
         .project-title {
-            font-size: calc(2vw + 1pt); 
+            font-size: 26px; 
             font-weight: 500;
             letter-spacing: -0.02em;
             line-height: 1.1;
@@ -303,7 +313,6 @@
             line-height: 1.5;
             color: #ffffff;
             padding-right: 20px;
-            opacity: 0.7;
             display: block;
             transition: opacity 0.3s ease;
         }
@@ -315,12 +324,11 @@
             align-items: start;
             z-index: 2;
             cursor: pointer;
-            transition: border-width 0.1s ease, padding-top 0.1s ease;
+            transition: box-shadow 0.1s ease;
         }
 
         .project-row:hover {
-            border-top-width: 5px;
-            padding-top: 6px; 
+            box-shadow: inset 0 4px 0 0 #ffffff;
         }
 
         #archive-list {
@@ -329,7 +337,7 @@
 
         .project-meta {
             font-size: 12px;
-            color: #fff;
+            color: #ffffff;
             padding-top: 0px;
         }
 
@@ -370,7 +378,9 @@
 
     <div class="logo-container" id="logoContainer">
         <div class="logo-wrapper" id="logoWrapper">
-            <img src="logonasa.jpg" alt="Logo NASA" id="nasaLogo">
+            <a href="https://www.nasa.gov/" target="_blank">
+                <img src="logonasa.jpg" alt="Logo NASA" id="nasaLogo">
+            </a>
         </div>
     </div>
 
@@ -380,7 +390,7 @@
                 <span class="label-small">About</span>
             </div>
             <div class="content-wrapper-header">
-                <h1 class="main-title">Celebrating the space conquest</h1>
+                <h1 class="main-title">One small step for man, <br> one giant leap for mankind</h1>
                 <p class="description-text">
                     Nasa 70 is a digital archive and interactive platform that brings together various experimental sites to honor the 70th anniversary of NASA. Through a curated collection of digital experiences, the project explores and visualizes the history of space conquest, merging historical legacy with innovative web technologies.                   </p>
             </div>
@@ -392,7 +402,7 @@
                     <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search by tag, name, ..." oninput="renderItems()">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by name, tag ..." oninput="renderItems()">
                 </div>
             </div>
             <div class="content-wrapper-header">
@@ -431,10 +441,10 @@
         let sortDirection = 'asc';
         const IMAGE_BASE_URL = "immagini/";
 
-        const logoContainer = document.getElementById('logoContainer');
+        const logoWrapper = document.getElementById('logoWrapper');
         let starInterval;
 
-        logoContainer.onmouseenter = () => {
+        logoWrapper.onmouseenter = () => {
             starInterval = setInterval(() => {
                 for (let i = 0; i < 2; i++) {
                     const star = document.createElement('div');
@@ -458,7 +468,7 @@
             }, 2);
         };
 
-        logoContainer.onmouseleave = () => {
+        logoWrapper.onmouseleave = () => {
             clearInterval(starInterval);
         };
 
