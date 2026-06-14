@@ -2,7 +2,8 @@
 Corso d’interaction design, CV429.01  
 Docenti: A. Gysin, G. Profeta  
 
-Progetto 1: La conquista dello spazio
+Progetto 2: Un piccolo passo per un uomo, un grande balzo per
+l’umanità
 
 # Nasa 70
 Autore: Carla De Gennaro \
