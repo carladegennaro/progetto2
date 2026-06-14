@@ -20,6 +20,17 @@ Dolor sit amet consectetur adipiscing elit duis tristique. Sociis natoque penati
 ## Design dell’interfaccia e modalità di interazione
 Facilisis magna etiam tempor orci eu. Felis donec et odio pellentesque diam volutpat commodo. Dis parturient montes nascetur ridiculus mus mauris vitae. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Accumsan sit amet nulla facilisi. Ultricies leo integer malesuada nunc vel risus. Est lorem ipsum dolor sit. Ultrices neque ornare aenean euismod elementum nisi. Ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Placerat duis ultricies lacus sed turpis tincidunt id aliquet. Arcu dictum varius duis at consectetur lorem donec massa sapien. Pellentesque habitant morbi tristique senectus. Turpis massa sed elementum tempus egestas sed sed risus pretium. Eros donec ac odio tempor orci. Pellentesque id nibh tortor id aliquet lectus. Risus feugiat in ante metus dictum at. Quam pellentesque nec nam aliquam sem et tortor consequat id. Feugiat nibh sed pulvinar proin gravida hendrerit lectus a. Sit amet dictum sit amet justo donec enim.
 
+https://github.com/user-attachments/assets/ed121971-1ada-4c9b-a48d-ad8174e71138
+<img width="1512" height="236" alt="0_screen3" src="https://github.com/user-attachments/assets/d984daa3-2bb2-4307-9c80-561e62a14cf1" />
+<img width="764" height="214" alt="0_screen2" src="https://github.com/user-attachments/assets/96cfdef9-b144-409d-975a-8db702ccd19a" />
+<img width="1512" height="858" alt="0_screen1" src="https://github.com/user-attachments/assets/3e6b42a8-36cc-4d95-963d-4be04024f096" />
+
+
+
+
+
+
+
 
 
 
