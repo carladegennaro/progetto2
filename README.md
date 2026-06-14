@@ -34,9 +34,8 @@ https://github.com/user-attachments/assets/21c0c238-976c-4329-9b67-9aa546798c41
 ## Tecnologia usata
 La gestione e il recupero dei dati avvengono in modo dinamico attraverso l'integrazione di un'API locale basata su un file in formato JSON. Questo file contiene tutti i metadati dettagliati dei singoli progetti (nomi, autori, date, descrizioni e percorsi delle immagini correlati).
 
-```
-
-        logoWrapper.onmouseenter = () => {
+``` JavaScript
+         logoWrapper.onmouseenter = () => {
             starInterval = setInterval(() => {
                 for (let i = 0; i < 2; i++) {
                     const star = document.createElement('div');
@@ -59,7 +58,6 @@ La gestione e il recupero dei dati avvengono in modo dinamico attraverso l'integ
                 }
             }, 2);
         };
-
 ```
 
 
