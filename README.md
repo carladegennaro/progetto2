@@ -7,7 +7,7 @@ l’umanità
 
 # Nasa 70
 Autore: Carla De Gennaro \
-[Nasa 70](https://carladegennaro.github.io/progetto2/index)
+[Nasa 70](https://carladegennaro.github.io/progetto2/index.html)
 
 
 ## Introduzione e tema
