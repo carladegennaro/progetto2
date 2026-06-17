@@ -1,4 +1,4 @@
-¨SUPSI 2026  
+SUPSI 2026  
 Corso d’interaction design, CV429.01  
 Docenti: A. Gysin, G. Profeta  
 
@@ -35,6 +35,7 @@ https://github.com/user-attachments/assets/21c0c238-976c-4329-9b67-9aa546798c41
 La gestione e il recupero dei dati avvengono in modo dinamico attraverso l'integrazione di un'API locale basata su un file in formato JSON. Questo file contiene tutti i metadati dettagliati dei singoli progetti (nomi, autori, date, descrizioni e percorsi delle immagini correlati).
 
 ``` JavaScript
+//Interazione stelle
          logoWrapper.onmouseenter = () => {
             starInterval = setInterval(() => {
                 for (let i = 0; i < 2; i++) {
